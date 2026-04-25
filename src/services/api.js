@@ -8,8 +8,8 @@ const api = axios.create({
   },
 })
 
-export const generateEnglish = async (topic) => {
-  const response = await api.post('/api/english/', { topic })
+export const generateEnglish = async (topic, essayType = '') => {
+  const response = await api.post('/api/english/', { topic, essay_type: essayType })
   return response.data
 }
 
