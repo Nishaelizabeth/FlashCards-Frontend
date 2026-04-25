@@ -18,6 +18,11 @@ export const generateChinese = async (topic) => {
   return response.data
 }
 
+export const translateChinese = async (text) => {
+  const response = await api.post('/api/translate/', { text })
+  return response.data
+}
+
 export const generateFlashcards = async (imageFile) => {
   const formData = new FormData()
   formData.append('image', imageFile)

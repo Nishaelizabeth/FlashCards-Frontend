@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { generateChinese } from '../services/api'
+import { generateChinese, translateChinese } from '../services/api'
 import chineseHeroImg from '../assets/chinese-hero.png'
 
 const EXAMPLES = [
@@ -15,6 +15,9 @@ function Chinese() {
   const [result, setResult] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [translation, setTranslation] = useState('')
+  const [isTranslating, setIsTranslating] = useState(false)
+  const [translateError, setTranslateError] = useState('')
 
   const handleGenerate = async () => {
     const trimmedTopic = topic.trim()
@@ -25,6 +28,8 @@ function Chinese() {
 
     setIsLoading(true)
     setError('')
+    setTranslation('')
+    setTranslateError('')
 
     try {
       const data = await generateChinese(trimmedTopic)
@@ -40,6 +45,31 @@ function Chinese() {
       setError('出了点问题，请再试一次。')
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  const handleTranslate = async () => {
+    if (!result) return
+
+    const textToTranslate = `
+写作提纲: ${result.写作提纲.join(' ')}
+开头: ${result.开头}
+内容: ${result.内容.join(' ')}
+结尾: ${result.结尾}
+好词好句: ${result.好词好句.join(' ')}
+写作建议: ${result.写作建议.join(' ')}
+    `.trim()
+
+    setIsTranslating(true)
+    setTranslateError('')
+
+    try {
+      const data = await translateChinese(textToTranslate)
+      setTranslation(data.translated || '')
+    } catch {
+      setTranslateError('Translation failed. Please try again.')
+    } finally {
+      setIsTranslating(false)
     }
   }
 
@@ -218,6 +248,44 @@ function Chinese() {
                           {result.写作建议.map((tip, idx) => <li key={idx}>{tip}</li>)}
                         </ul>
                       </section>
+                    )}
+                  </div>
+
+                  {/* ── Translation Section ── */}
+                  <div className="mt-8 border-t border-slate-100 pt-6 dark:border-slate-700/50">
+                    {!translation && !isTranslating && (
+                      <button
+                        onClick={handleTranslate}
+                        className="inline-flex items-center gap-2 rounded-lg bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+                      >
+                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>
+                        Translate to English
+                      </button>
+                    )}
+
+                    {isTranslating && (
+                      <div className="flex items-center gap-2 text-sm text-slate-500">
+                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-orange-500 border-t-transparent"></span>
+                        Translating...
+                      </div>
+                    )}
+
+                    {translateError && (
+                      <div className="mt-4 rounded-lg bg-red-50 p-3 text-sm text-red-600 dark:bg-red-900/30 dark:text-red-400">
+                        {translateError}
+                      </div>
+                    )}
+
+                    {translation && (
+                      <div className="mt-4 rounded-xl bg-slate-50 p-5 dark:bg-slate-900/50">
+                        <h4 className="mb-3 flex items-center gap-2 font-bold text-slate-800 dark:text-slate-200">
+                          <svg className="h-5 w-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>
+                          English Translation
+                        </h4>
+                        <div className="whitespace-pre-wrap text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                          {translation}
+                        </div>
+                      </div>
                     )}
                   </div>
                 </div>

@@ -33,9 +33,12 @@ function HeroSection({ theme, onToggleTheme }) {
 
         <button
           type="button"
+          onClick={() => {
+            document.getElementById('tools-section')?.scrollIntoView({ behavior: 'smooth' });
+          }}
           className="mt-6 rounded-lg bg-green-500 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:bg-green-600"
         >
-          Learn More
+          Let's Start Learning!
         </button>
 
         <div className="mt-8 lg:hidden">

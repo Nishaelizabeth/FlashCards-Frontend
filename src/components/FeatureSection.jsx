@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 
 function FeatureSection() {
   return (
-    <section className="relative overflow-hidden bg-[#FFF8F5] py-20 dark:bg-[#2d2523]">
+    <section id="tools-section" className="relative overflow-hidden bg-[#FFF8F5] py-20 dark:bg-[#2d2523]">
       {/* Decorative Elements */}
       <div className="absolute left-10 top-24 h-16 w-16 rounded-full border-[3px] border-pink-400/40"></div>
       <div className="absolute left-24 top-40 h-5 w-5 rounded-full border-2 border-pink-400/40"></div>
