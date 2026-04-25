@@ -10,12 +10,12 @@ function HeroSection({ theme, onToggleTheme }) {
       <Decorations />
 
 
-      <div className="relative z-10 flex w-full max-w-4xl flex-col items-center text-center lg:pb-48">
+      <div className="relative z-10 flex w-full max-w-4xl flex-col items-center text-center pb-32 sm:pb-40 lg:pb-48">
         <div className="mb-7 lg:hidden">
           <img
             src={leftImg}
             alt="Student holding books"
-            className="mx-auto h-[15rem] w-[10.5rem] rounded-full border-4 border-yellow-300 object-cover shadow-lg"
+            className="mx-auto h-[12rem] w-[8.5rem] rounded-full border-4 border-yellow-300 object-cover shadow-lg sm:h-[15rem] sm:w-[10.5rem]"
           />
         </div>
 
@@ -45,7 +45,7 @@ function HeroSection({ theme, onToggleTheme }) {
           <img
             src={rightImg}
             alt="Smiling student"
-            className="mx-auto h-[15rem] w-[10.5rem] rounded-full border-4 border-cyan-300 object-cover shadow-lg"
+            className="mx-auto h-[12rem] w-[8.5rem] rounded-full border-4 border-cyan-300 object-cover shadow-lg sm:h-[15rem] sm:w-[10.5rem]"
           />
         </div>
       </div>
@@ -67,7 +67,7 @@ function HeroSection({ theme, onToggleTheme }) {
       <img
         src={rainbowImg}
         alt="Colorful rainbow with school characters"
-        className="pointer-events-none absolute bottom-0 left-1/2 z-0 w-[64%] -translate-x-1/2 select-none sm:w-[55%] lg:w-[44%] xl:w-[40%]"
+        className="pointer-events-none absolute bottom-0 left-1/2 z-0 w-[90%] -translate-x-1/2 select-none sm:w-[70%] lg:w-[44%] xl:w-[40%]"
       />
     </div>
   )
